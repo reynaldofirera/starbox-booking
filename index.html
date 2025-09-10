@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarBox - Booking Barbershop Premium</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">⭐ StarBox</div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#services">Layanan</a></li>
+                <li><a href="#barbers">Tukang Cukur</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#contact">Kontak</a></li>
+                <li><a href="#contact">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>StarBox Barbershop</h1>
+            <p>Pengalaman cukur rambut premium dengan tukang cukur berpengalaman dan berrating tinggi</p>
+            <a href="#barbers" class="cta-button">
+                <i class="fas fa-calendar-alt"></i> Booking Sekarang
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Layanan Kami</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-cut"></i>
+                    <h3>Potong Rambut</h3>
+                    <p>Potongan rambut trendy dan klasik sesuai dengan gaya dan kepribadian Anda</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Perawatan Jenggot</h3>
+                    <p>Grooming jenggot profesional untuk tampilan yang rapi dan maskulin</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Hair Styling</h3>
+                    <p>Styling rambut dengan produk premium untuk acara khusus atau sehari-hari</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barber Rating Section -->
+    <section class="barber-rating" id="barbers">
+        <div class="container">
+            <h2 class="section-title">Pilih Tukang Cukur Favorit Anda</h2>
+            <div class="barbers-grid">
+                <div class="barber-card">
+                    <div class="barber-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="barber-info">
+                        <div class="barber-name">Triadi</div>
+                        <div class="barber-specialty">Spesialis Fade & Undercut</div>
+                        <div class="rating">
+                            <div class="stars">
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                            </div>
+                            <span class="rating-score">4.9</span>
+                        </div>
+                        <div class="review-count">128 ulasan</div>
+                        <button class="book-barber-btn" onclick="bookBarber('Triadi')">
+                            <i class="fas fa-calendar-check"></i> Booking Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <div class="barber-card">
+                    <div class="barber-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="barber-info">
+                        <div class="barber-name">Asan</div>
+                        <div class="barber-specialty">Master Classic Cut</div>
+                        <div class="rating">
+                            <div class="stars">
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                            </div>
+                            <span class="rating-score">4.8</span>
+                        </div>
+                        <div class="review-count">96 ulasan</div>
+                        <button class="book-barber-btn" onclick="bookBarber('Asan')">
+                            <i class="fas fa-calendar-check"></i> Booking Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Tentang StarBox</h2>
+                    <p>StarBox adalah barbershop premium yang menghadirkan pengalaman cukur rambut terbaik dengan tukang cukur berpengalaman dan berrating tinggi. Kami memahami bahwa setiap pelanggan memiliki preferensi unik, oleh karena itu kami memberikan sistem rating transparan untuk membantu Anda memilih tukang cukur yang tepat.</p>
+                    
+                    <p>Dengan sistem booking online yang mudah, Anda dapat melihat rating, ulasan, dan spesialisasi setiap tukang cukur sebelum membuat janji. Kepuasan pelanggan adalah prioritas utama kami, dan sistem rating membantu kami mempertahankan kualitas layanan yang konsisten.</p>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Sudirman No. 123, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> +62 21 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@starbox.id</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Jam Operasional</h3>
+                    <p>Senin - Jumat: 09:00 - 22:00</p>
+                    <p>Sabtu - Minggu: 09:00 - 22:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <a href="#">Potong Rambut</a>
+                    <a href="#">Hair Styling</a>
+                    <a href="#">Booking Online</a>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+            
+            <p style="margin-top: 2rem; color: #666;">&copy; 2024 StarBox Barbershop. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
