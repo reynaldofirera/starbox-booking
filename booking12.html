@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarBox - Booking Appointment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            padding: 3rem 0;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+        }
+
+        .booking-container {
+            background: rgba(42, 42, 42, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid #333;
+        }
+
+        .booking-header {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #000;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .booking-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .booking-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .barber-selection {
+            padding: 2rem;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-right: 1px solid #333;
+        }
+
+        .booking-form {
+            padding: 2rem;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .barber-card {
+            background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .barber-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        .barber-card.selected {
+            border-color: #d4af37;
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .barber-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .barber-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.5rem;
+        }
+
+        .barber-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: #d4af37;
+        }
+
+        .barber-specialty {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            color: #d4af37;
+        }
+
+        .rating-score {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #d4af37;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #333;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .time-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .time-option {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1rem 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .time-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .time-option:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .time-option:hover::before {
+            left: 100%;
+        }
+
+        .time-option.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            border-color: #5a67d8;
+        }
+
+        .time-option.unavailable {
+            background: #f1f3f4;
+            color: #9aa0a6;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .time-option.unavailable:hover {
+            transform: none;
+            box-shadow: none;
+            background: #f1f3f4;
+            color: #9aa0a6;
+        }
+
+        @media (max-width: 768px) {
+            .time-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+            }
+            
+            .time-option {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .time-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .service-option {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .service-option:hover {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #000;
+        }
+
+        .service-option.selected {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #000;
+        }
+
+        .service-option i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .book-btn {
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .book-btn:active {
+            transform: translateY(0);
+        }
+
+        .booking-summary {
+            background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid #333;
+        }
+
+        .booking-summary h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .summary-total {
+            border-top: 2px solid #d4af37;
+            padding-top: 0.5rem;
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        @media (max-width: 768px) {
+            .booking-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .barber-selection {
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">⭐ StarBox</div>
+            <ul class="nav-links">
+                <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="#"><i class="fas fa-cut"></i> Layanan</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Tukang Cukur</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Booking</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-header">
+                    <h1><i class="fas fa-calendar-check"></i> Booking Appointment</h1>
+                    <p>Pilih tukang cukur favorit Anda dan jadwalkan appointment</p>
+                </div>
+
+                <div class="booking-content">
+                    <!-- Barber Selection -->
+                    <div class="barber-selection">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-tie"></i> Pilih Tukang Cukur
+                        </h2>
+                        
+                        <div class="barber-card" onclick="selectBarber('triadi')">
+                            <div class="barber-info">
+                                <div class="barber-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="barber-details">
+                                    <h3>Triadi</h3>
+                                    <div class="barber-specialty">Spesialis Fade & Undercut</div>
+                                    <div class="rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-score">4.9</span>
+                                        <span>(128 ulasan)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="barber-card" onclick="selectBarber('asan')">
+                            <div class="barber-info">
+                                <div class="barber-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="barber-details">
+                                    <h3>Asan</h3>
+                                    <div class="barber-specialty">Master Classic Cut</div>
+                                    <div class="rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-score">4.8</span>
+                                        <span>(96 ulasan)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="booking-form">
+                        <h2 class="section-title">
+                            <i class="fas fa-clipboard-list"></i> Detail Booking
+                        </h2>
+
+                        <form id="bookingForm">
+                            <div class="form-group">
+                                <label for="name">
+                                    <i class="fas fa-user"></i> Nama Lengkap
+                                </label>
+                                <input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">
+                                    <i class="fas fa-phone"></i> Nomor Telepon
+                                </label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+62 812 3456 7890">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">
+                                    <i class="fas fa-calendar"></i> Tanggal
+                                </label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time">
+                                    <i class="fas fa-clock"></i> Pilih Waktu
+                                </label>
+                                <div class="time-options">
+                                    <div class="time-option" onclick="selectTime('09:00', this)">09:00</div>
+                                    <div class="time-option" onclick="selectTime('10:00', this)">10:00</div>
+                                    <div class="time-option" onclick="selectTime('11:00', this)">11:00</div>
+                                    <div class="time-option" onclick="selectTime('12:00', this)">12:00</div>
+                                    <div class="time-option" onclick="selectTime('13:00', this)">13:00</div>
+                                    <div class="time-option" onclick="selectTime('14:00', this)">14:00</div>
+                                    <div class="time-option" onclick="selectTime('15:00', this)">15:00</div>
+                                    <div class="time-option" onclick="selectTime('16:00', this)">16:00</div>
+                                    <div class="time-option" onclick="selectTime('17:00', this)">17:00</div>
+                                    <div class="time-option" onclick="selectTime('18:00', this)">18:00</div>
+                                    <div class="time-option" onclick="selectTime('19:00', this)">19:00</div>
+                                    <div class="time-option" onclick="selectTime('20:00', this)">20:00</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-cut"></i> Pilih Layanan
+                                </label>
+                                <div class="service-options">
+                                    <div class="service-option" onclick="selectService('haircut', 50000, this)">
+                                        <i class="fas fa-cut"></i>
+                                        <div>Potong Rambut</div>
+                                        <small>Rp 50,000</small>
+                                    </div>
+                                    <div class="service-option" onclick="selectService('beard', 30000, this)">
+                                        <i class="fas fa-spa"></i>
+                                        <div>Perawatan Jenggot</div>
+                                        <small>Rp 30,000</small>
+                                    </div>
+                                    <div class="service-option" onclick="selectService('styling', 40000, this)">
+                                        <i class="fas fa-magic"></i>
+                                        <div>Hair Styling</div>
+                                        <small>Rp 40,000</small>
+                                    </div>
+                                    <div class="service-option" onclick="selectService('premium', 100000, this)">
+                                        <i class="fas fa-crown"></i>
+                                        <div>Premium Package</div>
+                                        <small>Rp 100,000</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="notes">
+                                    <i class="fas fa-comment"></i> Catatan Tambahan
+                                </label>
+                                <textarea id="notes" name="notes" rows="3" placeholder="Spesifikasi potongan rambut atau permintaan khusus..."></textarea>
+                            </div>
+
+                            <div class="booking-summary">
+                                <h3><i class="fas fa-receipt"></i> Ringkasan Booking</h3>
+                                <div class="summary-item">
+                                    <span>Tukang Cukur:</span>
+                                    <span id="selectedBarber">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Layanan:</span>
+                                    <span id="selectedService">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Tanggal & Waktu:</span>
+                                    <span id="selectedDateTime">-</span>
+                                </div>
+                                <div class="summary-item summary-total">
+                                    <span>Total:</span>
+                                    <span id="totalPrice">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="book-btn">
+                                <i class="fas fa-check-circle"></i> Konfirmasi Booking
+                            </button>
+
+                            <div id="successMessage" class="success-message">
+                                <i class="fas fa-check-circle"></i>
+                                Booking berhasil! Kami akan menghubungi Anda untuk konfirmasi.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let selectedBarber = '';
+        let selectedServices = [];
+        let selectedTime = '';
+        let totalPrice = 0;
+
+        // Set minimum date to today
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        function selectBarber(barber) {
+            // Remove previous selection
+            document.querySelectorAll('.barber-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked barber
+            event.target.closest('.barber-card').classList.add('selected');
+            
+            selectedBarber = barber === 'triadi' ? 'Triadi' : 'Asan';
+            document.getElementById('selectedBarber').textContent = selectedBarber;
+        }
+
+        function selectTime(time, element) {
+            // Remove previous selection
+            document.querySelectorAll('.time-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked time
+            element.classList.add('selected');
+            
+            selectedTime = time;
+            updateDateTime();
+        }
+
+        function selectService(service, price, element) {
+            element.classList.toggle('selected');
+            
+            if (element.classList.contains('selected')) {
+                selectedServices.push({name: service, price: price, element: element});
+            } else {
+                selectedServices = selectedServices.filter(s => s.element !== element);
+            }
+            
+            updateServiceDisplay();
+            updateTotal();
+        }
+
+        function updateServiceDisplay() {
+            const serviceNames = {
+                'haircut': 'Potong Rambut',
+                'beard': 'Perawatan Jenggot',
+                'styling': 'Hair Styling',
+                'premium': 'Premium Package'
+            };
+            
+            const selectedServiceNames = selectedServices.map(s => serviceNames[s.name]);
+            document.getElementById('selectedService').textContent = 
+                selectedServiceNames.length > 0 ? selectedServiceNames.join(', ') : '-';
+        }
+
+        function updateTotal() {
+            totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
+            document.getElementById('totalPrice').textContent = 
+                totalPrice > 0 ? `Rp ${totalPrice.toLocaleString('id-ID')}` : 'Rp 0';
+        }
+
+        // Update datetime display
+        document.getElementById('date').addEventListener('change', updateDateTime);
+
+        function updateDateTime() {
+            const date = document.getElementById('date').value;
+            
+            if (date && selectedTime) {
+                const formattedDate = new Date(date).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById('selectedDateTime').textContent = `${formattedDate} ${selectedTime}`;
+            } else {
+                document.getElementById('selectedDateTime').textContent = '-';
+            }
+        }
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validation
+            if (!selectedBarber) {
+                alert('Silakan pilih tukang cukur terlebih dahulu');
+                return;
+            }
+            
+            if (selectedServices.length === 0) {
+                alert('Silakan pilih minimal satu layanan');
+                return;
+            }
+            
+            if (!selectedTime) {
+                alert('Silakan pilih waktu appointment');
+                return;
+            }
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                if (confirm('Booking berhasil disimpan! Apakah Anda ingin membuat booking baru?')) {
+                    location.reload();
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
